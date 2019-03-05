@@ -1,0 +1,11 @@
+[package]
+authors = ["Harrison Totty <harrisongtotty@gmail.com>"]
+description = "Displays a line of text."
+edition = "2018"
+name = "echo"
+publish = false
+version = "0.1.0"
+
+[dependencies.clap]
+features = ["color"]
+version = "2.32.0"

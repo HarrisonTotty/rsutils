@@ -1,0 +1,7 @@
+# Root cargo configuration file.
+
+[workspace]
+members = [
+    "cat",
+    "echo"
+]
