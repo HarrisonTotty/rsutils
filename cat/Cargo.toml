@@ -1,6 +1,6 @@
 [package]
 authors = ["Harrison Totty <harrisongtotty@gmail.com>"]
-description = "Concatenate files and print on the standard output."
+description = "Concatenate files and print them to stdout/stderr."
 edition = "2018"
 name = "cat"
 publish = false

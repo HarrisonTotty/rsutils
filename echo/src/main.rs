@@ -1,40 +1,47 @@
 //! echo - display a line of text
 
 use clap::{crate_authors, crate_description, crate_version};
-//use std::io::{self, Write};
 
 fn main() {
     let args = parse_arguments();
     let include_newline = !args.is_present("no_newline");
-    let enable_escapes  =  args.is_present("enable_escapes");
-    match args.values_of_lossy("string") {
+    let to_stdout       = !args.is_present("stderr");
+    match args.values_of_lossy("strings") {
         Some(vals) => {
             let full = vals.join(" ");
             if include_newline {
-                if enable_escapes {
+                if to_stdout {
                     println!("{}", full);
-                    //writeln!(&mut io::stdout(), "{}", full);
                 }
                 else {
-                    println!("{}", full);
+                    eprintln!("{}", full);
                 }
             }
             else {
-                if enable_escapes {
+                if to_stdout {
                     print!("{}", full);
-                    //write!(&mut io::stdout(), "{}", full);
                 }
                 else {
-                    print!("{}", full);
+                    eprint!("{}", full);
                 }
             }
         },
         _ => {
             if include_newline {
-                println!("");
+                if to_stdout {
+                    println!("");
+                }
+                else {
+                    eprintln!("");
+                }
             }
             else {
-                print!("");
+                if to_stdout {
+                    print!("");
+                }
+                else {
+                    eprint!("")
+                }
             }
         }
     }
@@ -54,21 +61,19 @@ pub fn parse_arguments<'a>() -> clap::ArgMatches<'a> {
             ]
         )
         // Global Arguments
-        .arg(clap::Arg::with_name("string")
-             .help("The string(s) to write to stdout.")
+        .arg(clap::Arg::with_name("strings")
+             .help("The string(s) to write to stdout/stderr.")
              .multiple(true)
         )
         .arg(clap::Arg::with_name("no_newline")
-             .help("Do not output the trailing newline.")
+             .help("Specifies that the program should not output the trailing newline character.")
+             .long("no-newline")
              .short("n")
         )
-        .arg(clap::Arg::with_name("enable_escapes")
-             .help("Enable interpretation of backslash escapes.")
+        .arg(clap::Arg::with_name("stderr")
+             .help("Specifies that the program should print to stderr instead of stdout.")
+             .long("stderr")
              .short("e")
-        )
-        .arg(clap::Arg::with_name("disable_escapes")
-             .help("Disable interpretation of backslash escapes (default).")
-             .short("E")
         );
     return argument_parser.get_matches();
 }

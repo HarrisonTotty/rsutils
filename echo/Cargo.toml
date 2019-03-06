@@ -1,6 +1,6 @@
 [package]
 authors = ["Harrison Totty <harrisongtotty@gmail.com>"]
-description = "Displays a line of text."
+description = "Repeats the arguments provided to it on stdout/stderr."
 edition = "2018"
 name = "echo"
 publish = false
